@@ -22,8 +22,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 const placeOrder = async (req, res) => {
   try {
-    
-    const { userId, items, amount, address } = req.body;
+    const userId = req.userId;
+    const { items, amount, address } = req.body;
     const orderData = {
       userId,
       items,
@@ -72,8 +72,8 @@ const placeOrder = async (req, res) => {
 
 const placeOrderCreditCard= async (req, res) => {
     try {
-        
-        const {userId, items, amount, address} = req.body;
+        const userId = req.userId;
+        const { items, amount, address} = req.body;
         const { origin } = req.headers;
         const orderData = {
             userId,
@@ -140,7 +140,8 @@ const placeOrderCreditCard= async (req, res) => {
 
 const verifyStripe = async (req, res) => {
 
-  const { orderId, success, userId } = req.body;
+  const userId = req.userId;
+  const { orderId, success } = req.body;
 
   try {
     if (success !== "true") {
@@ -210,7 +211,7 @@ const allOrders = async (req, res) => {
 const userOrders = async (req, res) => {
     try {
         
-        const {userId} = req.body
+        const userId = req.userId;
 
         const orders = await orderModel.find({userId})
         res.json({success: true, orders})

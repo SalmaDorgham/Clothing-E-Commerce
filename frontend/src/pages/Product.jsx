@@ -43,40 +43,72 @@ const Product = ({ token }) => {
     if (id) fetchProduct();
   }, [id, navigate]);
 
+  const [relatedLoading, setRelatedLoading] = useState(true);
   // FETCH RELATED PRODUCTS
   useEffect(() => {
     if (!product) return;
 
+    const pickRelated = (products, main, limit = 4) => {
+      const pool = (products || []).filter(
+        (p) => p.category === main.category && p._id !== main._id
+      );
+
+      const addUnique = (arr, items, max) => {
+        const seen = new Set(arr.map((x) => x._id));
+        for (const it of items) {
+          if (arr.length >= max) break;
+          if (!seen.has(it._id)) {
+            arr.push(it);
+            seen.add(it._id);
+          }
+        }
+        return arr;
+      };
+
+      let result = [];
+
+      const tier1 = pool.filter(
+        (p) => p.color === main.color && p.subCategory !== main.subCategory
+      );
+      const tier2 = pool.filter((p) => p.subCategory !== main.subCategory);
+      const tier3a = pool.filter(
+        (p) => p.subCategory === main.subCategory && p.color === main.color
+      );
+      const tier3b = pool.filter(
+        (p) => p.subCategory === main.subCategory && p.color !== main.color
+      );
+
+      addUnique(result, tier1, limit);
+      addUnique(result, tier2, limit);
+      addUnique(result, tier3a, limit);
+      addUnique(result, tier3b, limit);
+
+      return result.slice(0, limit);
+    };
+
     const fetchRelated = async () => {
+      setRelatedLoading(true);
       try {
         const res = await fetch(`${backendURL}/product/list`);
         const data = await res.json();
 
         if (data.success) {
-          const filtered = (data.products || [])
-            .filter(
-              (item) =>
-                item.category === product.category &&
-                item.color === product.color &&
-                item._id !== product._id
-            )
-            .slice(0, 4);
-
-          setRelated(filtered);
-          console.log(filtered);
-          console.log(related);
+          const picked = pickRelated(data.products, product, 4);
+          setRelated(picked);
         } else {
           toast.error(data.message);
         }
       } catch (error) {
         console.log(error);
         toast.error(error.message);
+      } finally {
+        setRelatedLoading(false);
       }
     };
 
     fetchRelated();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product]);
+
 
   if (!product) {
     return <p className="text-center mt-4">Loading...</p>;
@@ -212,24 +244,26 @@ const Product = ({ token }) => {
 
       {/* RELATED PRODUCTS */}
       <h5 className="mb-4 mt-4">Related Products</h5>
-      {!related ? (
+      {relatedLoading ? (
+        <p className="text-center mt-4">Loading related products...</p>
+      ) : related.length === 0 ? (
         <p className="text-center mt-4">No similar products found</p>
       ) : (
-        <>
-          <div className="row row-cols-2 row-cols-md-5 g-4">
-            {related.map((item) => (
-              <div className="col" key={item._id}>
-                <ProductCard
-                  id={item._id}
-                  title={item.name}
-                  image={item.image?.[0]}
-                  price={item.price}
-                />
-              </div>
-            ))}
-          </div>
-        </>
+        <div className="row row-cols-2 row-cols-md-5 g-4">
+          {related.map((item) => (
+            <div className="col" key={item._id}>
+              <ProductCard
+                id={item._id}
+                title={item.name}
+                image={item.image?.[0]}
+                price={item.price}
+              />
+            </div>
+          ))}
+        </div>
       )}
+
+
     </>
   );
 };

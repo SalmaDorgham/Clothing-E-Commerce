@@ -36,9 +36,10 @@ const Login = ({setToken}) => {
   
       console.log(data);
       console.log(data.message);
+      const tokenFromRes = data.token || data.message;
   
       if (data.success) {
-          setToken(data.message)
+          setToken(tokenFromRes)
           toast.success("Logged in Successfully, Welcome!")
           navigate("/");
       } else {
@@ -68,9 +69,15 @@ const Login = ({setToken}) => {
   
       console.log(data);
       console.log(data.message);
+      const tokenFromRes = data.token || data.message;
   
       if (data.success) {
-          setToken(data.message)
+        if (!tokenFromRes || tokenFromRes === "undefined") {
+          toast.error("Signup succeeded but token was not returned. Please log in.");
+          navigate("/login");
+          return;
+        }
+          setToken(tokenFromRes);
           toast.success("Account created Successfully!")
           navigate("/");
       } else {

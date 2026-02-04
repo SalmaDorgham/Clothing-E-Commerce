@@ -7,7 +7,8 @@ const userModel = require("../models/userModel");
 
 const addtoCart = async (req,res) => {
     try {
-        const {userId, itemId, size} = req.body
+        const userId = req.userId;
+        const {itemId, size} = req.body
 
         const userData = await userModel.findById(userId)
         let cartData = await userData.cartData;
@@ -36,7 +37,8 @@ const addtoCart = async (req,res) => {
 
 const updateCart = async (req, res) => {
   try {
-    const { userId, itemId, size, quantity } = req.body;
+    const userId = req.userId;
+    const { itemId, size, quantity } = req.body;
 
     const userData = await userModel.findById(userId);
     let cartData = userData.cartData || {};
@@ -70,7 +72,7 @@ const updateCart = async (req, res) => {
 const getCart = async (req,res) => {
     try {
         
-        const {userId} = req.body
+        const userId = req.userId;
 
         const userData = await userModel.findById(userId)
         let cartData = await userData.cartData;

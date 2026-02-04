@@ -36,6 +36,8 @@ const Cart = ({ token }) => {
     }, 0);
   }, [rows, productsById]);
 
+  console.log("token:", token, "type:", typeof token);
+
   //Fetch cartData
   useEffect(() => {
     const fetchCart = async () => {
