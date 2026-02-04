@@ -1,0 +1,19 @@
+.PM {
+  margin: 5%;
+  padding: auto;
+}
+
+.sectionTitle {
+  margin-bottom: 20px;
+}
+
+.infoh1 {
+  margin: 0;
+}
+.infop1 {
+  font-weight: bold;
+}
+.infop2 {
+  font-size: 15px;
+  color: gray;
+}

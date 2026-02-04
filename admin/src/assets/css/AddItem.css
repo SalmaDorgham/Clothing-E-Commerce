@@ -1,0 +1,18 @@
+.size-pill {
+  background-color: #e2e8f0;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.size-pill:hover {
+  background-color: #cbd5e1;
+}
+
+.size-pill.active {
+  background-color: #212529;
+  color: white;
+}

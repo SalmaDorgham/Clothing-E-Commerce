@@ -1,0 +1,13 @@
+.small-card-img-wrapper {
+  overflow: hidden;
+  border-radius: 0.375rem;
+}
+
+.image-zoom {
+  transition: transform 0.1s ease;
+  will-change: transform;
+}
+
+.card:hover .image-zoom {
+  transform: scale(1.12);
+}
