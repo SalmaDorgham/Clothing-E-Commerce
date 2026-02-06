@@ -6,7 +6,7 @@ import ProductCard from '../components/ProductCard';
 import Button from 'react-bootstrap/Button';
 import {backendURL} from "../App";
 import {toast} from 'react-toastify'
-import dummyBanner from '../assets/images/dummyBanner.jpeg'
+import dummyBanner from '../assets/images/dummyBanner.png'
 import menImg from '../assets/images/men.png'
 import womenImg from '../assets/images/women.png'
 import kidsImg from '../assets/images/kids.png'
@@ -184,7 +184,7 @@ const [bannerLoading, setBannerLoading] = useState(true);
           <img src={dummyBanner} className="d-block w-100" alt="dummy banner"/>
       </Carousel.Item>
     }
-    
+
     {/* loaded but empty */}
     {!bannerLoading && banners.length === 0 &&
       <img src={dummyBanner} className="d-block w-100" alt="dummy banner"/>
