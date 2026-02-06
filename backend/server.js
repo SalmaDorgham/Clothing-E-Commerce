@@ -9,24 +9,11 @@ const productRouter = require("./routes/productRoute");
 const cartRouter =require("./routes/cartRoute");
 const orderRouter =require("./routes/orderRoute");
 const bannerRouter =require("./routes/bannerRoute");
-const helmet = require("helmet");
 
 const app = express();
 const port = process.env.PORT || 5000
-
-// security
-mongoose.set("sanitizeFilter", true);
-app.set("trust proxy", 1);
-app.use(helmet());
-app.use(cors({
-  origin: [
-    "https://fashion-admin-gules-beta.vercel.app",
-    "https://fashion-frontend-seven.vercel.app",
-  ],
-  credentials: false,
-}));
+app.use(cors());
 app.use(express.json());
-
 connectDB();
 connectCloudinary();
 
