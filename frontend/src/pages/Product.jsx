@@ -67,21 +67,27 @@ const Product = ({ token }) => {
 
       let result = [];
 
-      const tier1 = pool.filter(
-        (p) => p.color === main.color && p.subCategory !== main.subCategory
+      // same color, same type
+      const tier1 = pool.filter( (p) => 
+        p.color === main.color && p.subCategory === main.subCategory 
       );
-      const tier2 = pool.filter((p) => p.subCategory !== main.subCategory);
-      const tier3a = pool.filter(
-        (p) => p.subCategory === main.subCategory && p.color === main.color
+      //  same color, different type
+      const tier2 = pool.filter( (p) => 
+        p.color === main.color && p.subCategory !== main.subCategory
       );
-      const tier3b = pool.filter(
-        (p) => p.subCategory === main.subCategory && p.color !== main.color
+      // different color, same type
+      const tier3 = pool.filter( (p) => 
+        p.color !== main.color && p.subCategory === main.subCategory
+      );
+      // different color, different type
+      const tier4 = pool.filter( (p) => 
+        p.subCategory !== main.subCategory
       );
 
       addUnique(result, tier1, limit);
       addUnique(result, tier2, limit);
-      addUnique(result, tier3a, limit);
-      addUnique(result, tier3b, limit);
+      addUnique(result, tier3, limit);
+      addUnique(result, tier4, limit);
 
       return result.slice(0, limit);
     };
