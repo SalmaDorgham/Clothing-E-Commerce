@@ -174,7 +174,7 @@ const [bannerLoading, setBannerLoading] = useState(true);
 
 
   return (
-    <div className='container text-center' >
+    <div className='text-center' >
 
     {/* Banners */}
 
