@@ -15,18 +15,11 @@ const mongoSanitize = require("express-mongo-sanitize");
 const app = express();
 const port = process.env.PORT || 5000
 
-// securities
+// security
 app.set("trust proxy", 1);
 app.use(helmet());
 app.use(mongoSanitize());
-app.use(cors({
-  origin: [
-  "https://fashion-admin-gules-beta.vercel.app", //admin
-  "https://fashion-frontend-seven.vercel.app", //user
-  ],
-  credentials: false,
-}));
-
+app.use(cors());
 
 app.use(express.json());
 connectDB();
