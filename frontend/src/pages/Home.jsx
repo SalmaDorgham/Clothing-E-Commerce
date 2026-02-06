@@ -6,7 +6,7 @@ import ProductCard from '../components/ProductCard';
 import Button from 'react-bootstrap/Button';
 import {backendURL} from "../App";
 import {toast} from 'react-toastify'
-import dummyBanner from '../assets/images/dummyBanner.png';
+import dummyBanner from '../assets/images/banner1.jpeg'
 import menImg from '../assets/images/men.png'
 import womenImg from '../assets/images/women.png'
 import kidsImg from '../assets/images/kids.png'
@@ -104,7 +104,23 @@ const [bannerLoading, setBannerLoading] = useState(true);
     accPickedByBucket.map((arr) => arr[i]).filter(Boolean)
   );
 
+  const displayBanners =
+    !bannerLoading && banners.length > 0
+      ? banners.map(b => ({
+          src: b.image,
+          alt: b.name,
+          key: b._id
+        }))
+      : [
+          {
+            src: dummyBanner,
+            alt: "Promotional Banner",
+            key: "dummy-banner"
+          }
+        ];
+
   // best seller scroll
+
   const scrollRef = useRef(null);
   const autoScrollRef = useRef(true);
   const intervalRef = useRef(null);
@@ -177,32 +193,17 @@ const [bannerLoading, setBannerLoading] = useState(true);
     <div className='container text-center' >
 
     {/* Banners */}
-    
-    {/* banners still loading */}
-    {bannerLoading && 
-      <Carousel.Item >
-          <img src={dummyBanner} className="d-block w-100" alt="dummy banner"/>
-      </Carousel.Item>
-    }
-    {/* loaded but empty */}
-    {!bannerLoading && banners.length === 0 &&
-      <img src={dummyBanner} className="d-block w-100" alt="dummy banner"/>
-    }
-
-    {/* loaded and not empty */}
-    {!bannerLoading && banners.length > 0 &&
-      <Carousel data-bs-theme="dark">
-        {banners.map((b) => (
-          <Carousel.Item key={b.key}>
-            <img
-              src={b.image}
-              className="d-block w-100"
-              alt={b.name}
-            />
-          </Carousel.Item>
-        ))}
-      </Carousel>
-    }
+    <Carousel data-bs-theme="dark">
+      {displayBanners.map((b) => (
+        <Carousel.Item key={b.key}>
+          <img
+            src={b.src}
+            className="d-block w-100"
+            alt={b.alt}
+          />
+        </Carousel.Item>
+      ))}
+    </Carousel>
     <hr />
 
 {/* Categories */}
