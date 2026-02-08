@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Carousel from 'react-bootstrap/Carousel';
 import Card from 'react-bootstrap/Card';
 import ProductCard from '../components/ProductCard';
-import Button from 'react-bootstrap/Button';
 import {backendURL} from "../App";
 import {toast} from 'react-toastify'
 import dummyBanner from '../assets/images/dummyBanner.png'
@@ -340,15 +339,6 @@ const [bannerLoading, setBannerLoading] = useState(true);
           <p className='infop2'>Lorem IpsumLorem IpsumLorem IpsumLorem Ipsum</p>
         </div>
       </div>
-
-{/* email service */}
-
-      <h3>Subscribe for XXX YYY ZZZ</h3>
-      <p className='infop2'>Lorem IpsumLorem IpsumLorem IpsumLorem Ipsum</p>
-      <form className="d-flex" style={{justifyContent:"center"}}>
-        <input className="form-control me-2" type="text" placeholder="you@example.com" style={{width:"50%"}}/>
-        <Button variant="dark" type="submit">submit</Button>
-      </form>
 
     </div>
   );
