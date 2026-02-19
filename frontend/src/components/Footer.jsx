@@ -1,7 +1,13 @@
+import { useState } from "react";
 import Button from 'react-bootstrap/Button';
+import Form from "react-bootstrap/Form";
 import { Link } from 'react-router-dom'
+import { toast } from "react-toastify";
 
 const Footer = () => {
+
+  const [email, setEmail] = useState("");
+
   return (
     <div className="container" style={{height:"350px", marginTop: "50px"}}>
         <div className="row">
@@ -47,8 +53,21 @@ const Footer = () => {
       <div className='text-center'>
         <h3>Subscribe for XXX YYY ZZZ</h3>
         <p className='infop2'>Lorem IpsumLorem IpsumLorem IpsumLorem Ipsum</p>
-        <form className="d-flex" style={{justifyContent:"center"}}>
-          <input className="form-control me-2" type="text" placeholder="you@example.com" style={{width:"50%"}}/>
+
+        <form 
+          className="d-flex" 
+          style={{justifyContent:"center"}} 
+          onSubmit={(e)=>{e.preventDefault(); toast.success("Subscribed!"); setEmail('')}}
+        >
+          <input 
+            className="form-control me-2" 
+            type="email" 
+            placeholder="you@example.com" 
+            style={{width:"50%"}}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
           <Button variant="dark" type="submit">submit</Button>
         </form>
         </div>
